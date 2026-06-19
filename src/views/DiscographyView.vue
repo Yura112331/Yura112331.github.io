@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSpotify } from '@/composables/useSpotify'
-import { formatDate } from '@/utils'
+import { formatDate, getAlbumTypeLabel } from '@/utils'
 import ScrollReveal from '@/components/ui/ScrollReveal.vue'
 import { Search, ExternalLink, Music } from 'lucide-vue-next'
 import type { SpotifyAlbum } from '@/types/spotify'
@@ -37,6 +37,8 @@ function getTypeLabel(type: string) {
   }
   return map[type] || type
 }
+
+
 
 function toggleExpand(id: string) {
   expandedId.value = expandedId.value === id ? null : id
