@@ -75,12 +75,12 @@ const stats = [
     </div>
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <ScrollReveal>
-        <p class="text-xs tracking-widest uppercase text-accent-cyan font-mono mb-4">— t('portfolio.label')</p>
+        <p class="text-xs tracking-widest uppercase text-accent-cyan font-mono mb-4">— {{ t('portfolio.label') }}</p>
         <h1 class="text-5xl md:text-8xl font-bold text-white leading-tight mb-6" style="font-family: Syne, sans-serif">
-          t('portfolio.title') <span class="gradient-text">t('portfolio.highlight')</span>
+          {{ t('portfolio.title') }} <span class="gradient-text">{{ t('portfolio.highlight') }}</span>
         </h1>
         <p class="text-white/40 text-lg max-w-xl">
-          t('portfolio.subtitle')
+          {{ t('portfolio.subtitle') }}
         </p>
       </ScrollReveal>
     </div>

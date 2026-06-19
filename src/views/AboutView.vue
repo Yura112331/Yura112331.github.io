@@ -27,10 +27,10 @@ const timeline = computed(() => tm('about.timeline') as { year: string; title: s
     </div>
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <ScrollReveal>
-        <p class="text-xs tracking-widest uppercase text-accent-purple font-mono mb-4">— t('about.label')</p>
+        <p class="text-xs tracking-widest uppercase text-accent-purple font-mono mb-4">— {{ t('about.label') }}</p>
         <h1 class="text-5xl md:text-8xl font-bold text-white leading-tight" style="font-family: Syne, sans-serif">
-          t('about.h1') br />
-          <span class="gradient-text">t('about.h1highlight')</span>
+          {{ t('about.h1') }} br />
+          <span class="gradient-text">{{ t('about.h1highlight') }}</span>
         </h1>
       </ScrollReveal>
     </div>
@@ -61,17 +61,17 @@ const timeline = computed(() => tm('about.timeline') as { year: string; title: s
         <ScrollReveal direction="right" :delay="0.2">
           <div class="space-y-6">
             <h2 class="text-3xl md:text-4xl font-bold text-white" style="font-family: Syne, sans-serif">
-              t('about.greeting')
+              {{ t('about.greeting') }}
             </h2>
             <div class="space-y-4 text-white/60 leading-relaxed">
               <p>
-                t('about.bio1')
+                {{ t('about.bio1') }}
               </p>
               <p>
-                t('about.bio2')
+                {{ t('about.bio2') }}
               </p>
               <p>
-                t('about.bio3')
+                {{ t('about.bio3') }}
               </p>
             </div>
 
@@ -97,9 +97,10 @@ const timeline = computed(() => tm('about.timeline') as { year: string; title: s
     <div class="max-w-4xl mx-auto px-6">
       <ScrollReveal>
         <div class="text-center mb-16">
-          <p class="text-xs tracking-widest uppercase text-accent-blue font-mono mb-3">— t('about.timelineLabel')</p>
+          <p class="text-xs tracking-widest uppercase text-accent-blue font-mono mb-3">— {{ t('about.timelineLabel') }}
+          </p>
           <h2 class="text-4xl md:text-5xl font-bold text-white" style="font-family: Syne, sans-serif">
-            t('about.timelineTitle')
+            {{ t('about.timelineTitle') }}
           </h2>
         </div>
       </ScrollReveal>

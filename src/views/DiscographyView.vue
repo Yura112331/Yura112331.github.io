@@ -54,9 +54,9 @@ function toggleExpand(id: string) {
     </div>
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <ScrollReveal>
-        <p class="text-xs tracking-widest uppercase text-accent-blue font-mono mb-4">— t('discography.label')</p>
+        <p class="text-xs tracking-widest uppercase text-accent-blue font-mono mb-4">— {{ t('discography.label') }}</p>
         <h1 class="text-5xl md:text-8xl font-bold text-white leading-tight mb-4" style="font-family: Syne, sans-serif">
-          t('discography.title') <span class="gradient-text">t('discography.highlight')</span>
+          {{ t('discography.title') }} <span class="gradient-text">{{ t('discography.highlight') }}</span>
         </h1>
         <p class="text-white/40 text-lg">
           {{ data?.albums?.length ?? '...' }} релізів • Автоматично зі Spotify
