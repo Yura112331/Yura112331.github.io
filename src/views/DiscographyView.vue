@@ -1,34 +1,42 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useSpotify } from '@/composables/useSpotify'
-import { formatDate, getAlbumTypeLabel } from '@/utils'
+import { formatDate } from '@/utils'
 import ScrollReveal from '@/components/ui/ScrollReveal.vue'
 import { Search, ExternalLink, Music } from 'lucide-vue-next'
 import type { SpotifyAlbum } from '@/types/spotify'
 
-type Filter = 'all' | 'single' | 'album' | 'compilation'
-
+const { t } = useI18n()
 const { data, isLoading, isError } = useSpotify()
 
+type Filter = 'all' | 'single' | 'album' | 'compilation'
 const filter = ref<Filter>('all')
 const search = ref('')
 const expandedId = ref<string | null>(null)
 
-const filterOptions = [
-  { value: 'all' as Filter,         label: 'Всі' },
-  { value: 'single' as Filter,      label: 'Сингли' },
-  { value: 'album' as Filter,       label: 'Альбоми' },
-  { value: 'compilation' as Filter, label: 'EP' }
-]
+const filterOptions = computed(() => [
+  { value: 'all' as Filter, label: t('discography.filterAll') },
+  { value: 'single' as Filter, label: t('discography.filterSingle') },
+  { value: 'album' as Filter, label: t('discography.filterAlbum') },
+  { value: 'compilation' as Filter, label: t('discography.filterEP') }
+])
 
-const filtered = computed<SpotifyAlbum[]>(() => {
-  const albums = data.value?.albums ?? []
-  return albums.filter(a => {
-    const matchFilter = filter.value === 'all' || a.album_type === filter.value
-    const matchSearch = a.name.toLowerCase().includes(search.value.toLowerCase())
-    return matchFilter && matchSearch
-  })
-})
+const filtered = computed<SpotifyAlbum[]>(() =>
+  (data.value?.albums ?? []).filter(a =>
+    (filter.value === 'all' || a.album_type === filter.value) &&
+    a.name.toLowerCase().includes(search.value.toLowerCase())
+  )
+)
+
+function getTypeLabel(type: string) {
+  const map: Record<string, string> = {
+    album: t('discography.typeAlbum'),
+    single: t('discography.typeSingle'),
+    compilation: t('discography.typeEP')
+  }
+  return map[type] || type
+}
 
 function toggleExpand(id: string) {
   expandedId.value = expandedId.value === id ? null : id
@@ -39,16 +47,14 @@ function toggleExpand(id: string) {
   <!-- Header -->
   <section class="pt-40 pb-16 relative overflow-hidden bg-black">
     <div class="absolute inset-0 pointer-events-none">
-      <div
-        class="absolute top-1/2 left-1/3 w-[600px] h-[400px] rounded-full blur-[120px] opacity-10"
-        style="background: radial-gradient(ellipse, #00BFFF, transparent 70%)"
-      />
+      <div class="absolute top-1/2 left-1/3 w-[600px] h-[400px] rounded-full blur-[120px] opacity-10"
+        style="background: radial-gradient(ellipse, #00BFFF, transparent 70%)" />
     </div>
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <ScrollReveal>
-        <p class="text-xs tracking-widest uppercase text-accent-blue font-mono mb-4">— Дискографія</p>
+        <p class="text-xs tracking-widest uppercase text-accent-blue font-mono mb-4">— t('discography.label')</p>
         <h1 class="text-5xl md:text-8xl font-bold text-white leading-tight mb-4" style="font-family: Syne, sans-serif">
-          Вся <span class="gradient-text">музика</span>
+          t('discography.title') <span class="gradient-text">t('discography.highlight')</span>
         </h1>
         <p class="text-white/40 text-lg">
           {{ data?.albums?.length ?? '...' }} релізів • Автоматично зі Spotify
@@ -62,15 +68,11 @@ function toggleExpand(id: string) {
     <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
       <!-- Filters -->
       <div class="flex gap-2 flex-wrap">
-        <button
-          v-for="opt in filterOptions"
-          :key="opt.value"
-          class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300"
-          :class="filter === opt.value
+        <button v-for="opt in filterOptions" :key="opt.value"
+          class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300" :class="filter === opt.value
             ? 'bg-gradient-to-r from-accent-blue to-accent-purple text-black'
             : 'glass border border-white/10 text-white/60 hover:text-white hover:border-white/30'"
-          @click="filter = opt.value"
-        >
+          @click="filter = opt.value">
           {{ opt.label }}
         </button>
       </div>
@@ -78,12 +80,8 @@ function toggleExpand(id: string) {
       <!-- Search -->
       <div class="relative">
         <Search :size="16" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
-        <input
-          v-model="search"
-          type="text"
-          placeholder="Пошук..."
-          class="pl-10 pr-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white placeholder-white/30 focus:outline-none focus:border-accent-blue/50 transition-colors w-52"
-        />
+        <input v-model="search" type="text" placeholder="Пошук..."
+          class="pl-10 pr-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white placeholder-white/30 focus:outline-none focus:border-accent-blue/50 transition-colors w-52" />
       </div>
     </div>
   </section>
@@ -118,20 +116,13 @@ function toggleExpand(id: string) {
 
       <!-- Albums grid -->
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <div
-          v-for="album in filtered"
-          :key="album.id"
-          class="group glass rounded-2xl overflow-hidden border border-white/5 hover:border-accent-blue/30 transition-all duration-500 hover:shadow-[0_0_40px_rgba(0,191,255,0.06)] hover:-translate-y-1"
-        >
+        <div v-for="album in filtered" :key="album.id"
+          class="group glass rounded-2xl overflow-hidden border border-white/5 hover:border-accent-blue/30 transition-all duration-500 hover:shadow-[0_0_40px_rgba(0,191,255,0.06)] hover:-translate-y-1">
           <!-- Cover -->
           <div class="relative aspect-square overflow-hidden">
-            <img
-              v-if="album.images[0]"
-              :src="album.images[0].url"
-              :alt="album.name"
+            <img v-if="album.images[0]" :src="album.images[0].url" :alt="album.name"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              loading="lazy"
-            />
+              loading="lazy" />
             <div v-else class="w-full h-full bg-surface-300 flex items-center justify-center">
               <Music :size="40" class="text-white/20" />
             </div>
@@ -150,34 +141,24 @@ function toggleExpand(id: string) {
             <p class="text-xs text-white/40 mb-4">{{ formatDate(album.release_date) }}</p>
 
             <!-- Toggle player -->
-            <button
-              class="text-xs text-accent-blue hover:text-accent-cyan transition-colors mb-3"
-              @click="toggleExpand(album.id)"
-            >
+            <button class="text-xs text-accent-blue hover:text-accent-cyan transition-colors mb-3"
+              @click="toggleExpand(album.id)">
               {{ expandedId === album.id ? 'Сховати ↑' : 'Слухати ▶' }}
             </button>
 
             <Transition name="slide">
               <div v-if="expandedId === album.id" class="overflow-hidden mb-3">
-                <iframe
-                  :src="`https://open.spotify.com/embed/album/${album.id}?utm_source=generator&theme=0`"
-                  width="100%"
-                  height="80"
-                  frameBorder="0"
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                  loading="lazy"
-                  class="rounded-xl"
-                />
+                <iframe :src="`https://open.spotify.com/embed/album/${album.id}?utm_source=generator&theme=0`"
+                  width="100%" height="80" frameBorder="0"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"
+                  class="rounded-xl" />
               </div>
             </Transition>
 
-            <a
-              :href="album.external_urls.spotify"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 text-xs text-white/40 hover:text-white transition-colors"
-            >
-              Відкрити в Spotify <ExternalLink :size="11" />
+            <a :href="album.external_urls.spotify" target="_blank" rel="noopener noreferrer"
+              class="inline-flex items-center gap-1 text-xs text-white/40 hover:text-white transition-colors">
+              Відкрити в Spotify
+              <ExternalLink :size="11" />
             </a>
           </div>
         </div>
@@ -187,11 +168,14 @@ function toggleExpand(id: string) {
 </template>
 
 <style scoped>
-.slide-enter-active, .slide-leave-active {
+.slide-enter-active,
+.slide-leave-active {
   transition: max-height 0.3s ease, opacity 0.3s ease;
   max-height: 200px;
 }
-.slide-enter-from, .slide-leave-to {
+
+.slide-enter-from,
+.slide-leave-to {
   max-height: 0;
   opacity: 0;
 }

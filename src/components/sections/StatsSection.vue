@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import ScrollReveal from '@/components/ui/ScrollReveal.vue'
 
-const stats = [
-  { label: 'Релізів', to: 20, suffix: '+' },
-  { label: 'Прослуховувань', to: 50, suffix: 'K+' },
-  { label: 'Рік початку', to: 2024, suffix: '' },
-  { label: 'Платформ', to: 6, suffix: '' }
+const { t } = useI18n()
+
+const statDefs = [
+  { to: 20, suffix: '+', key: 'stats.releases' },
+  { to: 50, suffix: 'K+', key: 'stats.streams' },
+  { to: 2024, suffix: '', key: 'stats.since' },
+  { to: 6, suffix: '', key: 'stats.platforms' }
 ]
 
-const counts = ref(stats.map(() => 0))
+const counts = ref(statDefs.map(() => 0))
 
 function animateCounter(index: number, to: number) {
   const start = Date.now()
@@ -27,7 +30,7 @@ onMounted(() => {
   if (!el) return
   const obs = new IntersectionObserver(([entry]) => {
     if (entry.isIntersecting) {
-      stats.forEach((s, i) => animateCounter(i, s.to))
+      statDefs.forEach((s, i) => animateCounter(i, s.to))
       obs.disconnect()
     }
   }, { threshold: 0.3 })
@@ -40,15 +43,12 @@ onMounted(() => {
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent to-[#00BFFF]/40" />
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-        <ScrollReveal v-for="(stat, i) in stats" :key="stat.label" :delay="i * 0.1">
+        <ScrollReveal v-for="(stat, i) in statDefs" :key="stat.key" :delay="i * 0.1">
           <div class="text-center">
-            <div
-              class="text-5xl md:text-6xl font-bold mb-2 gradient-text"
-              style="font-family: Syne, sans-serif"
-            >
+            <div class="text-5xl md:text-6xl font-bold mb-2 gradient-text" style="font-family: Syne, sans-serif">
               {{ counts[i] }}{{ stat.suffix }}
             </div>
-            <p class="text-white/40 text-sm tracking-widest uppercase">{{ stat.label }}</p>
+            <p class="text-white/40 text-sm tracking-widest uppercase">{{ t(stat.key) }}</p>
           </div>
         </ScrollReveal>
       </div>

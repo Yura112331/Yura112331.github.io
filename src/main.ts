@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query'
 import App from './App.vue'
 import router from './router'
+import { i18n } from './i18n'
 import './assets/globals.css'
 
 const queryClient = new QueryClient({
@@ -17,4 +18,5 @@ const queryClient = new QueryClient({
 createApp(App)
   .use(router)
   .use(VueQueryPlugin, { queryClient })
+  .use(i18n)
   .mount('#app')
