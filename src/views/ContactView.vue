@@ -128,34 +128,34 @@ async function submit() {
             <!-- Name -->
             <div>
               <label class="block text-sm text-white/60 mb-2">{{ t('contact.fName') }}</label>
-              <input v-model="form.name" type="text" placeholder="t('contact.fNamePlaceholder')"
+              <!-- <input v-model="form.name" type="text" placeholder="t('contact.fNamePlaceholder')"
                 class="w-full px-4 py-3 rounded-xl bg-white/5 border text-white placeholder-white/30 focus:outline-none focus:border-accent-blue/50 transition-colors"
-                :class="errors.name ? 'border-red-500/50' : 'border-white/10'" />
+                :class="errors.name ? 'border-red-500/50' : 'border-white/10'" /> -->
               <p v-if="errors.name" class="text-red-400 text-xs mt-1">{{ errors.name }}</p>
             </div>
 
             <!-- Email -->
             <div>
               <label class="block text-sm text-white/60 mb-2">{{ t('contact.fEmail') }}</label>
-              <input v-model="form.email" type="email" placeholder="t('contact.fEmailPlaceholder')"
+              <!-- <input v-model="form.email" type="email" placeholder="t('contact.fEmailPlaceholder')"
                 class="w-full px-4 py-3 rounded-xl bg-white/5 border text-white placeholder-white/30 focus:outline-none focus:border-accent-blue/50 transition-colors"
-                :class="errors.email ? 'border-red-500/50' : 'border-white/10'" />
+                :class="errors.email ? 'border-red-500/50' : 'border-white/10'" /> -->
               <p v-if="errors.email" class="text-red-400 text-xs mt-1">{{ errors.email }}</p>
             </div>
 
             <!-- Subject -->
             <div>
               <label class="block text-sm text-white/60 mb-2">{{ t('contact.fSubject') }}</label>
-              <input v-model="form.subject" type="text" placeholder="t('contact.fSubjectPlaceholder')"
-                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-accent-blue/50 transition-colors" />
+              <!-- <input v-model="form.subject" type="text" placeholder="t('contact.fSubjectPlaceholder')"
+                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-accent-blue/50 transition-colors" /> -->
             </div>
 
             <!-- Message -->
             <div>
               <label class="block text-sm text-white/60 mb-2">{{ t('contact.fMessage') }}</label>
-              <textarea v-model="form.message" rows="5" placeholder="t('contact.fNessagePlaceholder')"
+              <!-- <textarea v-model="form.message" rows="5" placeholder="t('contact.fNessagePlaceholder')"
                 class="w-full px-4 py-3 rounded-xl bg-white/5 border text-white placeholder-white/30 focus:outline-none focus:border-accent-blue/50 transition-colors resize-none"
-                :class="errors.message ? 'border-red-500/50' : 'border-white/10'" />
+                :class="errors.message ? 'border-red-500/50' : 'border-white/10'" /> -->
               <p v-if="errors.message" class="text-red-400 text-xs mt-1">{{ errors.message }}</p>
             </div>
 

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/vue-query'
 import axios from 'axios'
 import type { SpotifyAlbum, SpotifyArtist } from '@/types/spotify'
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API = import.meta.env.VITE_API_URL || 'https://inkbeat-api.vercel.app'
 
 interface SpotifyData {
   albums: SpotifyAlbum[]
@@ -16,7 +16,7 @@ export function useSpotify() {
       const { data } = await axios.get<SpotifyData>(`${API}/api/spotify`)
       return data
     },
-    staleTime: 1000 * 60 * 60, // 1 hour
+    staleTime: 1000 * 60 * 60,
     gcTime: 1000 * 60 * 60 * 2
   })
 }

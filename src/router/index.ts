@@ -37,12 +37,16 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes,
   scrollBehavior() {
-    return { top: 0, behavior: 'smooth' }
+    return { top: 0 }
   }
 })
 
 router.afterEach((to) => {
-  document.title = (to.meta.title as string) || 'InkBeat'
+  if (to && to.meta) {
+    document.title = (to.meta.title as string) || 'InkBeat'
+  } else {
+    document.title = 'InkBeat'
+  }
 })
 
 export default router

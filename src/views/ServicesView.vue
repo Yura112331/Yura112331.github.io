@@ -26,12 +26,13 @@ const services = computed(() =>
     </div>
     <div class="max-w-7xl mx-auto px-6 relative z-10">
       <ScrollReveal>
-        <p class="text-xs tracking-widest uppercase text-accent-purple font-mono mb-4">— t('servicesPage.label')</p>
+        <p class="text-xs tracking-widest uppercase text-accent-purple font-mono mb-4">— {{ t('servicesPage.label') }}
+        </p>
         <h1 class="text-5xl md:text-8xl font-bold text-white leading-tight mb-6" style="font-family: Syne, sans-serif">
-          t('servicesPage.title') <span class="gradient-text">t('servicesPage.highlight')</span>
+          {{ t('servicesPage.title') }} <span class="gradient-text"> {{ t('servicesPage.highlight') }}</span>
         </h1>
         <p class="text-white/40 text-lg max-w-xl">
-          t('servicesPage.subtitle')
+          {{ t('servicesPage.subtitle') }}
         </p>
       </ScrollReveal>
     </div>
@@ -62,7 +63,7 @@ const services = computed(() =>
               <RouterLink to="/contact"
                 class="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 border"
                 :style="{ borderColor: s.color + '40', color: s.color }">
-                t('servicesPage.order')
+                {{ t('servicesPage.order') }}
               </RouterLink>
             </div>
 

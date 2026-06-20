@@ -29,7 +29,7 @@ const timeline = computed(() => tm('about.timeline') as { year: string; title: s
       <ScrollReveal>
         <p class="text-xs tracking-widest uppercase text-accent-purple font-mono mb-4">— {{ t('about.label') }}</p>
         <h1 class="text-5xl md:text-8xl font-bold text-white leading-tight" style="font-family: Syne, sans-serif">
-          {{ t('about.h1') }} br />
+          {{ t('about.h1') }} <br />
           <span class="gradient-text">{{ t('about.h1highlight') }}</span>
         </h1>
       </ScrollReveal>
