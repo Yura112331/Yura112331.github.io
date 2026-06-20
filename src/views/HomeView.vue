@@ -7,7 +7,7 @@ import TestimonialsSection from '@/components/sections/TestimonialsSection.vue'
 import FAQSection from '@/components/sections/FAQSection.vue'
 import CTASection from '@/components/sections/CTASection.vue'
 </script>
-
+<!-- <label for=""></label> -->
 <template>
   <HeroSection />
   <StatsSection />
